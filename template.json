@@ -1,0 +1,20 @@
+{
+
+	"domain" : {
+
+		"vision" : {
+			"dataset" : "CIFAR-10",
+			"model": "conv"
+		},
+		"nlp" : {
+			"dataset" : "imdb_reviews",
+			"model": "lstm"
+		},
+		"structured" : {
+			"dataset" : "iris",
+			"model": "dnn"
+		}
+
+	}
+
+}

@@ -1,4 +1,4 @@
-{
+{	
 
 	"domain" : {
 
@@ -8,13 +8,40 @@
 		},
 		"nlp" : {
 			"dataset" : "imdb_reviews",
-			"model": "lstm"
+			"model": "rnn"
 		},
 		"structured" : {
 			"dataset" : "iris",
 			"model": "dnn"
 		}
 
-	}
+	},
+
+	"imports" : "imports.py",
+	"dataset" : "dataset.py",
+
+	"model" : {
+		"conv" : "conv_model.py",
+		"rnn" : "recurrent_model.py",
+		"dnn" : "dnn_model.py",
+		"custom" : "custom_model.py"
+	},
+
+	"training" : {
+		"custom" : "custom_train.py",
+		"built-in" : "built_in_train.py"
+	},
+
+	"testing" : "testing.py"
 
 }
+
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,7 @@ from stitch import stitch_template
 import os
 from stitch_ipynb import stitch_notebook
 import json
+
 """
 Arguments to take :-
 	name :- Name of the starter file to produce
@@ -19,35 +20,86 @@ Arguments to take :-
 	dataset -
 	training - custom(default) or fit
 	test : true(default) or false
-	logging : True(default) or False
 
 """
+
 # Important features 
 # reqired = bool , True default 
 # allow_abbrev = True ,default
 parser = argparse.ArgumentParser(prog="tf-stitch",
 								description="Starter code with best practices for different Deep Learning problems in one command.",
-								epilog="Thanks for Using")
+								epilog="Thanks for Using.")
 
+# Argument for file to be generated
 parser.add_argument('output_file',
 					type=str,
 					help="the output file with starter code"
 					)
 
-parser.add_argument('domain',
+# Argument
+parser.add_argument('-d',
+					'--domain',
 					type=str,
 					help="domain problem type for selecting\
 						  appropriate model and dataset"
 					)
 
+parser.add_argument('dataset',
+					type=str,
+					help="Select any of Tensorflow datasets",
+					required=False
+					)
+
+parser.add_argument('model',
+					type=str,
+					help="Select the Deep Learning Model",
+					required=False
+					)
+
+parser.add_argument('training',
+					type=str,
+					default="custom",
+					help="Type of training loop, Custom or built-in",
+					required=False
+					)
+
+parser.add_argument('testing',
+					type=bool,
+					default=True,
+					help="if to include testing",
+					required=False
+					)
+
 args = parser.parse_args()
+print( typeof(args) )
 
 output_extension = os.path.splitext( args.output_file )[-1]
 
 if not (output_extension in ['.py','.ipynb']):
 	raise( Exception( " Output File extension must be .py or .ipynb " ) )
 
-content_blocks = stitch_template( args.domain )
+domain = args.domain
+
+# if domain is given, we use some default arguments
+if domain is None:
+
+	if args.dataset==None or args.model==None :
+		raise( Exception( "Either provide domain eg. -d = vision \
+			or provide dataset and model eg. tf-stitch cifar-10 conv" ) )
+	else :
+
+		dataset = args.dataset
+		model = args.model
+
+
+training = args.training	
+testing = args.testing	
+
+content_blocks = stitch_template( domain ,
+								  dataset,
+								  model,
+								  training,
+								  testing )
 
 with open( args.output_file , "w" ) as file:
 

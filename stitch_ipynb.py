@@ -9,7 +9,6 @@ def stitch_notebook( temp_blocks ):
         cell = {
             'cell_type': cell_type,
             'metadata': {},
-            # 'source': block,
             'source': block.splitlines(True),
             'outputs': [], 
             'execution_count': None

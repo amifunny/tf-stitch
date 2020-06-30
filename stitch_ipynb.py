@@ -1,5 +1,14 @@
+# It "stitch" together a simple jupyter notebook.
+# Note , currently it only account for code blocks,
+# as templates don't contanin any markdown , and
+# vital information are provided as form of comments
+
 def stitch_notebook( temp_blocks ):
 
+    # `temp_blocks` consist of all template parts,
+    # stored as a list
+
+    # to store list of `cell` json
     cells = []
 
     for block in temp_blocks:
@@ -16,6 +25,7 @@ def stitch_notebook( temp_blocks ):
 
         cells.append(cell)
 
+    # It is standard way to write starter json of the notebook
     notebook = {
         'nbformat': 4,
         'nbformat_minor': 0,

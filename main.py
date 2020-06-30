@@ -14,10 +14,10 @@ Arguments to take :-
 
 			vision : Conv Model and CIFAR-10 DATASET
 			nlp : Conv Model and IMDB Sentiment Analysis DATASET
-			feature : DNN with HOUSE PRICING DATSET
+			structure : DNN with Iris Datset
 
-	model - 
-	dataset -
+	model - Model to pre-construct
+	dataset - Tensorflow dataset to use
 	training - custom(default) or fit
 	test : true(default) or false
 
@@ -44,26 +44,26 @@ parser.add_argument('-d',
 						  appropriate model and dataset"
 					)
 
-parser.add_argument('dataset',
+parser.add_argument('--dataset',
 					type=str,
 					help="Select any of Tensorflow datasets",
 					required=False
 					)
 
-parser.add_argument('model',
+parser.add_argument('--model',
 					type=str,
 					help="Select the Deep Learning Model",
 					required=False
 					)
 
-parser.add_argument('training',
+parser.add_argument('--training',
 					type=str,
 					default="custom",
 					help="Type of training loop, Custom or built-in",
 					required=False
 					)
 
-parser.add_argument('testing',
+parser.add_argument('--testing',
 					type=bool,
 					default=True,
 					help="if to include testing",
@@ -71,7 +71,7 @@ parser.add_argument('testing',
 					)
 
 args = parser.parse_args()
-print( typeof(args) )
+print( type(args) )
 
 output_extension = os.path.splitext( args.output_file )[-1]
 
@@ -80,7 +80,11 @@ if not (output_extension in ['.py','.ipynb']):
 
 domain = args.domain
 
-# if domain is given, we use some default arguments
+dataset = None
+model = None
+
+# Make sure either domain is provided,
+# or the choice of dataset or model
 if domain is None:
 
 	if args.dataset==None or args.model==None :

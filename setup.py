@@ -5,9 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tf-stitch", 
-    version="1.0.1",
+    version="1.1.0",
     author="Hemant Singh",
-    keywords=["deep learning" , "tensorflow" , "tf2.0" ,"keras",
+    keywords=["Deep learning" , "tensorflow" , "tf2.0" ,"keras",
              "Boilerplate" , "Starter Code" , "Starter Pieces" , "Quick Work" , "Productivity"],
     description="Quick Starter Code with different specifications stitched together in tensorflow 2.0 .",
     long_description=long_description,
@@ -21,6 +21,9 @@ setuptools.setup(
     },
     include_package_data=True,
     packages=setuptools.find_packages(),
+    package_data={
+        'tf_stitch':['templates/*/*.py','template.json']
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

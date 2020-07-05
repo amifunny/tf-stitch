@@ -1,4 +1,8 @@
 import json
+import os
+
+# path of where package is installed in system
+RES_PATH = os.path.dirname(__file__)+"\\"
 
 # Exception class for producing message , if argument
 # given by user is invalid and also showing valid possible 
@@ -23,7 +27,7 @@ def get_files(**kwargs):
 
 	# 'template.json' file contains mapping of arguments,
 	# to possible values and their corresponding template filenames
-	with open('template.json',"rb") as file:
+	with open(RES_PATH+'template.json',"rb") as file:
 		json_dict = json.loads( file.read() )
 		file.close()
 
@@ -96,26 +100,26 @@ def stitch_template( domain=None,
 	# Store code blocks, read from template files
 	template_content = []
 
-	with open( 'templates/imports/'+files['import_file'] , "r" ) as file:
+	with open( RES_PATH+'templates/imports/'+files['import_file'] , "r" ) as file:
 		template_content.append( file.read().strip() )
 		file.close()
 
 	# For dataset template part , a special keyword => '%DATASET_NAME%',
 	# is used to replace it with provided or default dataset name.
-	with open( 'templates/dataset/'+files['dataset_file'] , "r" ) as file:
+	with open( RES_PATH+'templates/dataset/'+files['dataset_file'] , "r" ) as file:
 		template_content.append( file.read().strip().replace('%DATASET_NAME%',dataset) )
 		file.close()
 
-	with open( 'templates/model/'+files['model_file'] , "r" ) as file:
+	with open( RES_PATH+'templates/model/'+files['model_file'] , "r" ) as file:
 		template_content.append( file.read().strip() )
 		file.close()	
 
-	with open( 'templates/training/'+files['training_file'] , "r" ) as file:
+	with open( RES_PATH+'templates/training/'+files['training_file'] , "r" ) as file:
 		template_content.append( file.read().strip() )
 		file.close()
 
 	if files['testing_file']!=None:
-		with open( 'templates/testing/'+files['testing_file'] , "r" ) as file:
+		with open( RES_PATH+'templates/testing/'+files['testing_file'] , "r" ) as file:
 			template_content.append( file.read().strip() )
 			file.close()
 

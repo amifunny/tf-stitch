@@ -90,8 +90,8 @@ def main():
 	if domain is None:
 
 		if args.dataset==None or args.model==None :
-			raise( Exception( "Either provide domain eg. -d = vision \
-				or provide dataset and model eg. tf-stitch cifar-10 conv" ) )
+			raise( Exception( "Either provide domain eg. -d = vision \n"+
+				"or provide dataset and model eg. tf-stitch cifar-10 conv" ) )
 		else :
 
 			dataset = args.dataset

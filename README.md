@@ -53,6 +53,7 @@ Current domain options are -
 **Either provide domain argument or dataset and model arguments** 
 
 **- dataset DATASET**  :  Select any of Tensorflow datasets. See [catalog](https://www.tensorflow.org/datasets/catalog/overview).
+
 **--model MODEL**   :     Select a Deep Learning Model
 Current available options -
 

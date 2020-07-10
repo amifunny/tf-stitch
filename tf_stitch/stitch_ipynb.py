@@ -25,7 +25,8 @@ def stitch_notebook( temp_blocks ):
 
         cells.append(cell)
 
-    # It is standard way to write starter json of the notebook
+    # It is standard way to write starter json of the notebook,
+    # all constructed cell json goes into `cells` key
     notebook = {
         'nbformat': 4,
         'nbformat_minor': 0,

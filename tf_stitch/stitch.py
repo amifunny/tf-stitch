@@ -63,12 +63,17 @@ def get_files(**kwargs):
 	template_files['import_file'] = json_dict['imports']
 	template_files['dataset_file'] = json_dict['dataset']
 
-	# TODO : Add Preprocessing options as well.
 
 	if not (kwargs['model'] in json_dict['model'].keys()):
 		raise( ArgumentError("model",json_dict['domain'].keys()) )
 
 	template_files['model_file'] = json_dict['model'][kwargs['model']]
+
+	# Preprocessing option for few model. See "template.json".
+	# Check if 'preprocessing' has key corresponding to current model.
+	# If exist add to files dictionary.
+	if kwargs['model'] in json_dict['preprocessing'].keys():
+		template_files['preprocessing_file'] = json_dict['preprocessing'][kwargs['model']]
 
 	if not (kwargs['training'] in json_dict['training'].keys()):
 		raise( ArgumentError("training",json_dict['domain'].keys() ) )
@@ -109,6 +114,11 @@ def stitch_template( domain=None,
 	with open( RES_PATH+'templates/dataset/'+files['dataset_file'] , "r" ) as file:
 		template_content.append( file.read().strip().replace('%DATASET_NAME%',dataset) )
 		file.close()
+
+	if 'preprocessing_file' in files:
+		with open( RES_PATH+'templates/preprocessing/'+files['preprocessing_file'] , "r" ) as file:
+			template_content.append( file.read().strip() )
+			file.close()
 
 	with open( RES_PATH+'templates/model/'+files['model_file'] , "r" ) as file:
 		template_content.append( file.read().strip() )

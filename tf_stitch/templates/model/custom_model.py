@@ -31,11 +31,14 @@ def get_model():
 
 	out = CustomLayer()(inputs)
 
-	# Define more layers
+	# Define more layers here
 
 	outputs = layers.Dense(10,activation="softmax")
 
-model = Model(inputs,outputs)
+    model = Model(inputs,outputs)
+    return model
+
+model = get_model()    
 
 
 

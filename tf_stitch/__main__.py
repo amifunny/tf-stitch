@@ -11,23 +11,22 @@ Arguments to take :-
 
 	domain : (Optional) Problem domain in dl,
 			so to give appropriate models and data.
-
+			
+			Example
 			vision : Conv Model and CIFAR-10 DATASET
 			nlp : Conv Model and IMDB Sentiment Analysis DATASET
 			structure : DNN with Iris Datset
 
 	model - Model to pre-construct
 	dataset - Tensorflow dataset to use
-	training - custom(default) or fit
-	test : true(default) or false
-
+	training - choose Training loop ,custom(default) or fit
+	test : Whether to include test loop, true(default) or false
+	preprocessing : Added by default for selected models
 """
 
 def main():
 
 	# Important features 
-	# reqired = bool , True default 
-	# allow_abbrev = True ,default
 	parser = argparse.ArgumentParser(prog="tf-stitch",
 									description="Starter code with best practices for different Deep Learning problems in one command.",
 									epilog="Thanks for Using.")
@@ -42,26 +41,26 @@ def main():
 	parser.add_argument('-d',
 						'--domain',
 						type=str,
-						help="domain problem type for selecting\
-							  appropriate model and dataset"
+						help="domain problem type for selecting "+
+							  "appropriate model and dataset"
 						)
 
 	parser.add_argument('--dataset',
 						type=str,
-						help="Select any of Tensorflow datasets",
+						help="select any of Tensorflow datasets",
 						required=False
 						)
 
 	parser.add_argument('--model',
 						type=str,
-						help="Select the Deep Learning Model",
+						help="select the Deep Learning Model",
 						required=False
 						)
 
 	parser.add_argument('--training',
 						type=str,
 						default="custom",
-						help="Type of training loop, Custom or built-in",
+						help="type of training loop, Custom or built-in",
 						required=False
 						)
 
@@ -72,21 +71,23 @@ def main():
 						required=False
 						)
 
+	# Create a Namespace object of all arguments
 	args = parser.parse_args()
-	print( type(args) )
 
+	# Extension of the file name provided
 	output_extension = os.path.splitext( args.output_file )[-1]
 
 	if not (output_extension in ['.py','.ipynb']):
-		raise( Exception( " Output File extension must be .py or .ipynb " ) )
+		raise( Exception( "Output File extension must be .py or .ipynb " ) )
 
+	# Domain provided in argument
 	domain = args.domain
 
 	dataset = None
 	model = None
 
 	# Make sure either domain is provided,
-	# or the choice of dataset or model
+	# or the choice of dataset and model
 	if domain is None:
 
 		if args.dataset==None or args.model==None :
@@ -101,12 +102,14 @@ def main():
 	training = args.training	
 	testing = args.testing	
 
+	# Get template codes into `content_blocks`
 	content_blocks = stitch_template( domain ,
 									  dataset,
 									  model,
 									  training,
 									  testing )
 
+	# Write the file using `content_blocks`
 	with open( args.output_file , "w" ) as file:
 
 		if output_extension==".ipynb":
@@ -116,10 +119,17 @@ def main():
 
 		else:
 
-			file.write( "\n\n".join( content_blocks ) )
+			divide_columns = 80
+			# Section divider for ".py" file to separate out code blocks
+			section_divider = "#"+"-"*(divide_columns)
+			# Two newlines between each code blocks and section divider
+			file.write( ("\n"+section_divider+"\n").join( content_blocks ) )
 
 		file.close()
 
+	# Show in message at end of program.
+	success_msg = "Your code is stitched to your fit. Thanks for Using :)"
+	print( success_msg )
 
 if __name__=='__main__':
 	main()

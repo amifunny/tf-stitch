@@ -23,8 +23,12 @@ epochs = 10
 acc_metric = metrics.Accuracy()
 mean_metric = metrics.Mean()
 
+# Initializing log file
+timestamp = time.strftime("%d-%b-%Y_%H-%M-%S")
+log_filename = "log_{}.txt".format(timestamp)
 log_file = open( log_filename , "w+")
 
+# Epochs loop
 for epoch in range(epochs):
 
     # to count epoch time
@@ -34,16 +38,16 @@ for epoch in range(epochs):
     for (x_batch_train, y_batch_train) in train_batches:
 
         loss_value = train_step(x_batch_train, y_batch_train)
-
-
+        mean_metric.update_state( loss_value )
 
     # Display metrics and write to file at the end of each epoch.
     train_acc = acc_metric.result()
-    epoch_loss = loss_metric.result()
+    epoch_loss = mean_metric.result()
 
     train_log = "Training Acc. for epoch *{}* - > : %.4f".format(  float(train_acc) )
     loss_log = "Avg Loss for epoch *{}* - > : %.4f".format(  float(train_acc) )
 
+    # Write to file
     log( log_file , train_log )
     log( log_file , loss_log )
 

@@ -8,19 +8,22 @@ dense_layers_dimensions = [1]
 
 def get_model():
 
-	inputs = layers.Input(image_dimensions)
+	inputs = layers.Input((BATCH_SIZE,))
 
-	out = inputs
+    out = layers.Embedding(encoder.vocab_size, embedding_dimensions )(inputs)
 
-	for dims in gru_layers_dimensions[-1]:
+	for dims in gru_layers_dimensions[:-1]:
 		out = layers.GRU( dims , return_sequences=True )(out)
 
-	out = layers.GRU( dims )(out)
+	out = layers.GRU( gru_layers_dimensions[-1] )(out)
 
 	for dims in dense_layers_dimensions[:-1]:
 		layers.Dense( dims )
 
 	outputs = layers.Dense( dense_layers_dimensions[-1] , activation="softmax" )
 
-# Maps `inputs` to `outputs` to construct a model
-model = Model(inputs,outputs)
+	# Maps `inputs` to `outputs` to construct a model
+	model = Model(inputs,outputs)
+	return model
+
+model = get_model()	

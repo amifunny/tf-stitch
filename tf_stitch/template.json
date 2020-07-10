@@ -20,6 +20,11 @@
 	"imports" : "imports.py",
 	"dataset" : "dataset.py",
 
+	"preprocessing" : {
+		"conv" : "image.py",
+		"rnn" : "sequence.py"
+	},
+
 	"model" : {
 		"conv" : "conv_model.py",
 		"rnn" : "recurrent_model.py",

@@ -16,5 +16,8 @@ def get_model():
 
 	outpus = layers.Dense( dense_layers_dimensions[-1] , activation="softmax" )
 
-# Maps `inputs` to `outputs` to construct a model
-model = Model(inputs,outputs)
+	# Maps `inputs` to `outputs` to construct a model
+	model = Model(inputs,outputs)
+	return model
+
+model = get_model()	

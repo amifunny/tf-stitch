@@ -123,7 +123,7 @@ def main():
 			# Section divider for ".py" file to separate out code blocks
 			section_divider = "#"+"-"*(divide_columns)
 			# Two newlines between each code blocks and section divider
-			file.write( ("\n"+section_divider+"\n").join( content_blocks ) )
+			file.write( ("\n\n"+section_divider+"\n\n").join( content_blocks ) )
 
 		file.close()
 

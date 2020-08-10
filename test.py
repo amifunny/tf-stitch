@@ -1,3 +1,8 @@
+
+
+# ##### UNDER CONSTRUCTION FILE ##### #
+
+
 import unittest
 import os
 
@@ -8,9 +13,10 @@ class Test(unittest.TestCase):
 	# Create folder
 
 	def test_file_exists(self):
-		exit_status = os.system( 'tf-stitch out.py -d = {}'.format( 'vision') )
+		exit_status = os.system( 'python tf_stitch/__main__.py out.py -d = {}'.format( 'vision') )
 		print( 'tf-stitch out.py -d = {}'.format( 'vision') )
 		self.assertEqual( exit_status , 0 )
+
 
 
 if __name__=='__main__':

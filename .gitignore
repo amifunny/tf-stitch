@@ -1,0 +1,4 @@
+build/
+dist/
+tf_stitch.egg-info/
+*.pyc

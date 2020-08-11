@@ -1,34 +1,142 @@
-
-
-# ##### UNDER CONSTRUCTION FILE ##### #
-
-
+# Subprocess to run CLI for package
+import subprocess
 import unittest
 import os
 
-# Test if a file of correct name is created
+MODULE = "tf-stitch"
+# File to generate
+FILENAME = "output.py"
 
 class Test(unittest.TestCase):
 
-	# Create folder
+	def execute_query( self, args, filename=FILENAME ):
 
-	def test_file_exists(self):
-		exit_status = os.system( 'python tf_stitch/__main__.py out.py -d = {}'.format( 'vision') )
-		print( 'tf-stitch out.py -d = {}'.format( 'vision') )
-		self.assertEqual( exit_status , 0 )
+		"""
+			Execute command to generate stitched file
+			with given arguments
 
+			return - A subprocess.CompletedProcess Object
+		"""
+
+		if len(args)==0:
+			subprocess_arg = [ MODULE , filename ]
+		else:	
+			subprocess_arg = [ MODULE , filename, *args ]
+
+		output = subprocess.run(
+            		subprocess_arg	
+        		)
+
+		return output
+
+	def checkpoint( self, process_result ):
+
+		"""
+			Return (boolean) : If there was no error and 
+			generated a non-empty file, return True.
+			else False.
+			Also remove the generated file.
+		"""
+
+		# check if status code was not 0;
+		# i.e. If a error occured
+		if process_result.returncode!=0:
+			return False
+
+		# Second argument is always filename
+		generated_file = process_result.args[1]
+
+		# Check if a file with given filename was generated
+		is_exists = os.path.exists( generated_file )
+
+		if is_exists:
+			
+			# If generated, check if it is empty
+			is_empty = os.path.getsize( generated_file ) == 0
+		
+			# cleanup the generated file
+			os.remove( generated_file )
+			
+			if not is_empty:
+				return True
+
+		return False	
+
+
+	def test_py_simple(self):
+		"""
+			Check for `domain` argument only.
+		"""
+		test_args = [
+			"-d=vision"
+		]
+
+		query_result = self.execute_query( test_args )
+		self.assertTrue( self.checkpoint(query_result) )
+
+
+	def test_ipynb_simple(self):
+
+		"""
+			Check notebook genration with `domain` argument only.
+		"""
+
+		test_args = [
+			"-d=nlp"
+		]
+
+		notebook_file = FILENAME.split(".")[0] + ".ipynb"
+
+		query_result = self.execute_query( test_args , notebook_file )
+		self.assertTrue( self.checkpoint(query_result) )
+
+	def test_py_all_args(self):
+
+		"""
+			Check for extensive list of arguments with
+			dataset and	model arguments
+		"""
+
+		test_args = [
+			"--dataset=cifar100",
+			"--model=conv",
+			"--training=custom",
+			"--testing=True"
+		]
+
+		query_result = self.execute_query( test_args )
+		self.assertTrue( self.checkpoint(query_result) )
+
+	def test_py_wrong_args(self):
+
+		"""
+			Check if error occurs for wrong argument
+		"""
+
+		test_args = [
+			"--dataset=cifar100",
+			"--model=wrong_model",
+			"--training=custom",
+			"--testing=True"
+		]
+
+		query_result = self.execute_query( test_args )
+		self.assertFalse( self.checkpoint(query_result) )
+
+	def test_py_no_args(self):
+
+		"""
+			Check if error occurs for no arguments
+		"""
+
+		test_args = []
+
+		query_result = self.execute_query( test_args )
+		self.assertFalse( self.checkpoint(query_result) )
 
 
 if __name__=='__main__':
 	unittest.main()
-
-# Check file is not empty
-
-# Check for .ipynb and .py
-
-# Check for different option , (right)
-
-# or wrong
 
 
 

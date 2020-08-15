@@ -2,7 +2,7 @@ import json
 import os
 
 # path of where package is installed in system
-RES_PATH = os.path.dirname(__file__)+"\\"
+RES_PATH = os.path.dirname(__file__)+"/"
 
 # Exception class for producing message , if argument
 # given by user is invalid and also showing valid possible 

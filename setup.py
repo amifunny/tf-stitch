@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tf-stitch", 
-    version="1.2.0",
+    version="1.2.1",
     author="Hemant Singh",
     keywords=["Deep learning" , "tensorflow" , "tf2.0" ,"keras",
              "Boilerplate" , "Starter Code" , "Starter Pieces" , "Quick Work" , "Productivity"],

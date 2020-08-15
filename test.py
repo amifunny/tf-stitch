@@ -3,7 +3,8 @@ import subprocess
 import unittest
 import os
 
-MODULE = "tf-stitch"
+MODULE = "python -m tf_stitch"
+MODULE_ARG = MODULE.split()
 # File to generate
 FILENAME = "output.py"
 
@@ -19,9 +20,9 @@ class Test(unittest.TestCase):
 		"""
 
 		if len(args)==0:
-			subprocess_arg = [ MODULE , filename ]
+			subprocess_arg = MODULE_ARG + [ filename ]
 		else:	
-			subprocess_arg = [ MODULE , filename, *args ]
+			subprocess_arg = MODULE_ARG + [ filename, *args ]
 
 		output = subprocess.run(
             		subprocess_arg	
@@ -43,9 +44,8 @@ class Test(unittest.TestCase):
 		if process_result.returncode!=0:
 			return False
 
-		# Second argument is always filename
-		generated_file = process_result.args[1]
-
+		# Fourth argument is always filename
+		generated_file = process_result.args[3]
 		# Check if a file with given filename was generated
 		is_exists = os.path.exists( generated_file )
 

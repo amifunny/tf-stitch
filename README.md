@@ -85,4 +85,4 @@ You can contribute, but not restricted to, in following ways -
  - **Apply best and latest TF2.0 practices.**
  - **Add more template and domain options.**
 
-Looking forward to hear from you : )
+Looking forward to hear from you.
